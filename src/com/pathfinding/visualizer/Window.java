@@ -3,6 +3,10 @@ package com.pathfinding.visualizer;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import java.awt.FlowLayout;
+import javax.swing.JPanel;
+import javax.swing.border.BevelBorder;
+import java.awt.Color;
 
 public class Window {
 
@@ -36,8 +40,16 @@ public class Window {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 776, 598);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		frame.setResizable(false);
+		PolarGrid c = new PolarGrid();
+		c.setBounds(207, 0, 564, 569);
+		frame.getContentPane().add(c);
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(0, 0, 208, 569);
+		frame.getContentPane().add(panel);
 	}
-
 }
