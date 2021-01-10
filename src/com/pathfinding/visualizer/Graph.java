@@ -29,7 +29,7 @@ public class Graph
     }
  
     // prints BFS traversal from a given source s
-    void BFS(int s)
+    void BFS(int s, PolarGrid polargrid)
     {
         // Mark all the vertices as not visited(By default
         // set as false)
@@ -47,6 +47,14 @@ public class Graph
             // Dequeue a vertex from queue and print it
             s = queue.poll();
             System.out.print(s+" ");
+            PolarGrid.sectors[s].setColor(new Color(0,255,255));
+            polargrid.repaint();
+            try {
+    			Thread.sleep(25);
+    		} catch (InterruptedException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
  
             // Get all adjacent vertices of the dequeued vertex s
             // If a adjacent has not been visited, then mark it
@@ -54,42 +62,25 @@ public class Graph
             Iterator<Integer> i = adj[s].listIterator();
             while (i.hasNext())
             {
+            	
                 int n = i.next();
                 if (!visited[n])
                 {
                     visited[n] = true;
                     queue.add(n);
+                    
+
                 }
             }
+            
         }
-    }
- 
-    // Driver method to
-    public static void main(String args[])
-    {
-        Graph g = new Graph(9);
- 
-        g.addEdge(0, 1);
-        g.addEdge(0, 2);
-        g.addEdge(0, 3);
-        g.addEdge(0, 4);
-        
-        g.addEdge(1, 5);
 
-        g.addEdge(3, 6);
-        
-        g.addEdge(5, 7);
-        
-        g.addEdge(6, 8);
-        
- 
-        System.out.println("Following is Breadth First Traversal "+
-                           "(starting from vertex 0)");
- 
-        g.BFS(0);
-        
+
+
         
     }
+ 
+
 }
 
 

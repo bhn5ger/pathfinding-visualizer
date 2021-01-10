@@ -1,10 +1,10 @@
 package com.pathfinding.visualizer;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Random;
 
 import javax.swing.JPanel;
 
@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 public class PolarGrid extends JPanel implements MouseListener{
 	
 	public static Sector [] sectors = new Sector[176];
+	public Graph graph = new Graph(176);
 		
 	public static final int [] ORIGIN = {279, 285};
 	public static final int [] circleRadii = {4};
@@ -43,15 +44,31 @@ public class PolarGrid extends JPanel implements MouseListener{
 			System.out.println(i + "th entry, " + sectors[i]);
 			startAngle += 22.5;
 			endAngle += 22.5;
-			
-			
+		}
+		//create graph
+		for(int i = 0; i < 176; i++) {
+			if( i == 15 || i == 31 || i == 47 || i == 63 || i == 79 || i == 95 || i == 111 || i == 127 || i == 143 || i == 159 || i == 175) {
+				graph.addEdge(i , i - 15);
+				graph.addEdge(i - 15, i);
+			}
+			else {
+				graph.addEdge(i, i + 1);
+				graph.addEdge(i + 1, i);
+			} 
 		}
 		
+		for(int i = 0; i < 160; i++) {
+				graph.addEdge(i , i + 16);
+				graph.addEdge(i + 16, i);
+
+		}
+		
+	
 	}
-	
-	
 
 	public void paint(Graphics g) {
+		g.setColor(new Color(240,240,240));
+		g.fillRect(0,0,564,569);
 		//fill circles
 		/*
 		int x = 1, y = 5;
@@ -71,15 +88,8 @@ public class PolarGrid extends JPanel implements MouseListener{
 	
 		for(int i = 0; i < sectors.length; i++) {
 			g.setColor(sectors[i].getColor());
-			g.setColor(Color.red);
-			if(sectors[i].getEndAngle() == 360) {
-				g.fillArc(sectors[i].getX(), sectors[i].getY(), sectors[i].getWidth() , sectors[i].getHeight(), (int)sectors[i].getStartAngle(), (int)sectors[i].getEndAngle());
-			}
-
-			
+			g.fillArc(sectors[i].getX(), sectors[i].getY(), sectors[i].getWidth() , sectors[i].getHeight(), (int)sectors[i].getStartAngle(), 23);
 		}
-		
-		
 		
 		
 		
@@ -96,6 +106,19 @@ public class PolarGrid extends JPanel implements MouseListener{
 			height += 50;
 			
 		}
+		x -= 25;
+		y -= 25;
+		width += 50;
+		height += 50;
+		for(int i = 0; i < 2; i++) {
+			g.drawOval(x, y, width, height);
+			x -= 50;
+			y -= 50;
+			width += 100;
+			height += 100;
+			
+		}
+		
 		//lines
 		//y and x axes
 		g.drawLine(275, -5, 275, 564); 
@@ -111,8 +134,21 @@ public class PolarGrid extends JPanel implements MouseListener{
 		g.drawLine(-5, 164, 559, 396);
 		g.drawLine(559, 163, -5, 395);
 		
+		Font f = new Font("TimesRoman", 0, 17);
+		g.setFont(f);
+		g.drawString("¹⁄₈π", 532, 153);
+		g.drawString("¹⁄₄π", 513, 16);
+		g.drawString("³⁄₈π", 360, 11);
+		g.drawString("⁵⁄₈π", 173, 14);
+		g.drawString("³⁄₄π", 36, 18);
+		g.drawString("⁷⁄₈π", -1, 155);
 		
-
+		g.drawString("9⁄₈π", 1, 425);
+		g.drawString("5⁄₄π", 28, 544);
+		g.drawString("11⁄₈π", 170, 564);
+		g.drawString("13⁄₈π", 347, 564);
+		g.drawString("7⁄₄π", 500, 552);
+		g.drawString("15⁄₈π", 520, 425);
 		
 		
 	}
