@@ -27,6 +27,7 @@ public class PolarGrid extends JPanel implements MouseListener, MouseMotionListe
 	public static final int HEIGHT = 558;
 	private Color mouseColor = Color.black;
 	private boolean toolboxClicked = false;
+	private boolean completeGrid = false;
 	
 	
 	public PolarGrid() {
@@ -136,90 +137,105 @@ public class PolarGrid extends JPanel implements MouseListener, MouseMotionListe
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		if(toolboxClicked == true && Search.isSearching == false) {
-			int mx = e.getX();
-			int my = e.getY();
-			Point mouseOver = new Point(mx, my);
-			System.out.println("(" + mx + " , " + my + ")" );
-			Color white = new Color(240,240,240);
-			if(mouseColor == Color.green || mouseColor == Color.red) {
-				for(int i = 0; i < 176; i++) {
-					if(PolarGrid.sectors[i].getColor() == mouseColor) {
-						PolarGrid.sectors[i].setColor(new Color(240,240,240));
-						repaint();
+		if(completeGrid == false) {
+			
+			if(toolboxClicked == true && Search.isSearching == false) {
+				int mx = e.getX();
+				int my = e.getY();
+				Point mouseOver = new Point(mx, my);
+				System.out.println("(" + mx + " , " + my + ")" );
+				Color white = new Color(240,240,240);
+				if(mouseColor == Color.green || mouseColor == Color.red) {
+					for(int i = 0; i < 176; i++) {
+						if(PolarGrid.sectors[i].getColor() == mouseColor) {
+							PolarGrid.sectors[i].setColor(new Color(240,240,240));
+							repaint();
+						}
+					}
+					for(int i = 0; i < 176; i++) {
+						if(PolarGrid.sectors[i].getPoly().contains(mouseOver) && PolarGrid.sectors[i].getColor().getRed() == white.getRed() && 
+								PolarGrid.sectors[i].getColor().getGreen() == white.getGreen() && PolarGrid.sectors[i].getColor().getBlue() == white.getBlue()) {
+							PolarGrid.sectors[i].setColor(mouseColor);
+							repaint();
+						}
 					}
 				}
-				for(int i = 0; i < 176; i++) {
-					if(PolarGrid.sectors[i].getPoly().contains(mouseOver) && PolarGrid.sectors[i].getColor().getRed() == white.getRed() && 
-							PolarGrid.sectors[i].getColor().getGreen() == white.getGreen() && PolarGrid.sectors[i].getColor().getBlue() == white.getBlue()) {
-						PolarGrid.sectors[i].setColor(mouseColor);
-						repaint();
+				else if(mouseColor.getRed() == white.getRed() && mouseColor.getGreen() == white.getGreen() && mouseColor.getBlue() == white.getBlue()) {
+					for(int i = 0; i < 176; i++) {
+						if(PolarGrid.sectors[i].getPoly().contains(mouseOver)) {
+							PolarGrid.sectors[i].setColor(mouseColor);
+							repaint();
+						}
 					}
 				}
-			}
-			else if(mouseColor.getRed() == white.getRed() && mouseColor.getGreen() == white.getGreen() && mouseColor.getBlue() == white.getBlue()) {
-				for(int i = 0; i < 176; i++) {
-					if(PolarGrid.sectors[i].getPoly().contains(mouseOver)) {
-						PolarGrid.sectors[i].setColor(mouseColor);
-						repaint();
+				else if(mouseColor == Color.black) {
+					for(int i = 0; i < 176; i++) {
+						if(PolarGrid.sectors[i].getPoly().contains(mouseOver) && PolarGrid.sectors[i].getColor().getRed() == white.getRed() && 
+								PolarGrid.sectors[i].getColor().getGreen() == white.getGreen() && PolarGrid.sectors[i].getColor().getBlue() == white.getBlue()) {
+							PolarGrid.sectors[i].setColor(mouseColor);
+							repaint();
+						}
 					}
 				}
-			}
-			else if(mouseColor == Color.black) {
-				for(int i = 0; i < 176; i++) {
-					if(PolarGrid.sectors[i].getPoly().contains(mouseOver) && PolarGrid.sectors[i].getColor().getRed() == white.getRed() && 
-							PolarGrid.sectors[i].getColor().getGreen() == white.getGreen() && PolarGrid.sectors[i].getColor().getBlue() == white.getBlue()) {
-						PolarGrid.sectors[i].setColor(mouseColor);
-						repaint();
-					}
-				}
-			}
 
+			}
+			
+			
+			
 		}
+
 	
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		if(toolboxClicked == true && Search.isSearching == false) {
-			int mx = e.getX();
-			int my = e.getY();
-			Point mouseOver = new Point(mx, my);
-			System.out.println("(" + mx + " , " + my + ")" );
-			Color white = new Color(240,240,240);
-			if(mouseColor == Color.green || mouseColor == Color.red) {
-				for(int i = 0; i < 176; i++) {
-					if(PolarGrid.sectors[i].getColor() == mouseColor) {
-						PolarGrid.sectors[i].setColor(new Color(240,240,240));
-						repaint();
+		if(completeGrid == false) {
+			
+			if(toolboxClicked == true && Search.isSearching == false) {
+				int mx = e.getX();
+				int my = e.getY();
+				Point mouseOver = new Point(mx, my);
+				System.out.println("(" + mx + " , " + my + ")" );
+				Color white = new Color(240,240,240);
+				if(mouseColor == Color.green || mouseColor == Color.red) {
+					for(int i = 0; i < 176; i++) {
+						if(PolarGrid.sectors[i].getColor() == mouseColor) {
+							PolarGrid.sectors[i].setColor(new Color(240,240,240));
+							repaint();
+						}
+					}
+					for(int i = 0; i < 176; i++) {
+						if(PolarGrid.sectors[i].getPoly().contains(mouseOver) && PolarGrid.sectors[i].getColor().getRed() == white.getRed() && 
+								PolarGrid.sectors[i].getColor().getGreen() == white.getGreen() && PolarGrid.sectors[i].getColor().getBlue() == white.getBlue()) {
+							PolarGrid.sectors[i].setColor(mouseColor);
+							repaint();
+						}
 					}
 				}
-				for(int i = 0; i < 176; i++) {
-					if(PolarGrid.sectors[i].getPoly().contains(mouseOver) && PolarGrid.sectors[i].getColor().getRed() == white.getRed() && 
-							PolarGrid.sectors[i].getColor().getGreen() == white.getGreen() && PolarGrid.sectors[i].getColor().getBlue() == white.getBlue()) {
-						PolarGrid.sectors[i].setColor(mouseColor);
-						repaint();
+				else if(mouseColor.getRed() == white.getRed() && mouseColor.getGreen() == white.getGreen() && mouseColor.getBlue() == white.getBlue()) {
+					for(int i = 0; i < 176; i++) {
+						if(PolarGrid.sectors[i].getPoly().contains(mouseOver)) {
+							PolarGrid.sectors[i].setColor(mouseColor);
+							repaint();
+						}
+					}
+				}
+				else if(mouseColor == Color.black) {
+					for(int i = 0; i < 176; i++) {
+						if(PolarGrid.sectors[i].getPoly().contains(mouseOver) && PolarGrid.sectors[i].getColor().getRed() == white.getRed() && 
+								PolarGrid.sectors[i].getColor().getGreen() == white.getGreen() && PolarGrid.sectors[i].getColor().getBlue() == white.getBlue()) {
+							PolarGrid.sectors[i].setColor(mouseColor);
+							repaint();
+						}
 					}
 				}
 			}
-			else if(mouseColor.getRed() == white.getRed() && mouseColor.getGreen() == white.getGreen() && mouseColor.getBlue() == white.getBlue()) {
-				for(int i = 0; i < 176; i++) {
-					if(PolarGrid.sectors[i].getPoly().contains(mouseOver)) {
-						PolarGrid.sectors[i].setColor(mouseColor);
-						repaint();
-					}
-				}
-			}
-			else if(mouseColor == Color.black) {
-				for(int i = 0; i < 176; i++) {
-					if(PolarGrid.sectors[i].getPoly().contains(mouseOver) && PolarGrid.sectors[i].getColor().getRed() == white.getRed() && 
-							PolarGrid.sectors[i].getColor().getGreen() == white.getGreen() && PolarGrid.sectors[i].getColor().getBlue() == white.getBlue()) {
-						PolarGrid.sectors[i].setColor(mouseColor);
-						repaint();
-					}
-				}
-			}
+			
+			
+			
+			
 		}
+
 	
 	}
 	
@@ -243,6 +259,9 @@ public class PolarGrid extends JPanel implements MouseListener, MouseMotionListe
 	}
 	public void setToolboxClicked(boolean b) {
 		this.toolboxClicked = b;
+	}
+	public void setCompleteGrid(boolean b) {
+		this.completeGrid = b;
 	}
 	
 

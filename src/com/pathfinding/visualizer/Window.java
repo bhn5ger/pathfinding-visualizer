@@ -28,6 +28,8 @@ public class Window implements ActionListener{
 	private JComboBox algorithms;
 	private JRadioButton start, finish, wall, eraser;
 	private JSlider speedSlider;
+	private JLabel checks;
+	private JLabel pathlen;
 
 	/**
 	 * Launch the application.
@@ -60,7 +62,7 @@ public class Window implements ActionListener{
 	 */
 	private void initialize() {
 		frame = new JFrame("Pathfinding Visualizer");
-		frame.setBounds(100, 100, 840, 672);
+		frame.setBounds(100, 100, 840, 674);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
@@ -74,13 +76,13 @@ public class Window implements ActionListener{
 		
 		controlPanel = new JPanel();
 		controlPanel.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Control Panel", TitledBorder.LEADING, TitledBorder.TOP, null, SystemColor.textText));
-		controlPanel.setBounds(14, 37, 206, 583);
+		controlPanel.setBounds(13, 217, 206, 403);
 		frame.getContentPane().add(controlPanel);
 		controlPanel.setLayout(null);
 		
 		search = new JButton("Search");
 		search.setBackground(Color.LIGHT_GRAY);
-		search.setBounds(38, 531, 126, 23);
+		search.setBounds(38, 358, 126, 23);
 		search.addActionListener(this);
 		controlPanel.add(search);
 		
@@ -123,7 +125,7 @@ public class Window implements ActionListener{
 		group.add(wall);
 		group.add(eraser);
 		
-		reset = new JButton("Reset");
+		reset = new JButton("Clear Map");
 		reset.setBackground(Color.LIGHT_GRAY);
 		reset.setBounds(38, 29, 126, 23);
 		reset.addActionListener(this);
@@ -139,7 +141,7 @@ public class Window implements ActionListener{
 		controlPanel.add(algoLabel);
 		
 		speedSlider = new JSlider();
-		speedSlider.setBounds(32, 321, 139, 26);
+		speedSlider.setBounds(32, 320, 139, 26);
 		controlPanel.add(speedSlider);
 		
 		speedLbl = new JLabel("Animation Speed:");
@@ -150,12 +152,31 @@ public class Window implements ActionListener{
 		polarGridBorder.setBorder(new LineBorder(new Color(0, 0, 0)));
 		polarGridBorder.setBounds(229, 45, 576, 573);
 		frame.getContentPane().add(polarGridBorder);
-		polarGridBorder.setLayout(null);
+		polarGridBorder.setLayout(null); 
 		
 		title = new JLabel("Polar Pathfinding Visualizer");
 		title.setFont(new Font("Tahoma", Font.BOLD, 14));
 		title.setBounds(17, 7, 275, 24);
 		frame.getContentPane().add(title);
+		
+		JPanel console = new JPanel();
+		console.setBounds(13, 37, 206, 176);
+		frame.getContentPane().add(console);
+		console.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Console", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
+		console.setLayout(null);
+		
+		String mess = "<html> Generate a map or create your <br/> own map with a start and finish, <br/> and then select an algorithm to begin searching. </html>";
+		JLabel message = new JLabel(mess);
+		message.setBounds(11, 23, 186, 64);
+		console.add(message);
+		
+		checks = new JLabel("Checks: 0 ");
+		checks.setBounds(57, 126, 72, 14);
+		console.add(checks);
+		
+		pathlen = new JLabel("Path Length: 0 ");
+		pathlen.setBounds(57, 145, 94, 14);
+		console.add(pathlen);
 		
 	}
 
@@ -165,8 +186,9 @@ public class Window implements ActionListener{
 			Search s = new Search(String.valueOf(algorithms.getSelectedItem()));
 			
 		}
-		if(e.getActionCommand().equals("Reset") && Search.isSearching == false){
+		if(e.getActionCommand().equals("Clear Map") && Search.isSearching == false){
 			polargrid.reset();
+			polargrid.setCompleteGrid(false);
 			
 		}  
 		if(e.getSource() == wall) {
