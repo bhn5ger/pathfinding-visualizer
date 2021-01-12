@@ -25,6 +25,8 @@ public class PolarGrid extends JPanel implements MouseListener, MouseMotionListe
 	public static final Point ORIGIN = new Point(276, 279);
 	public static final int WIDTH = 552;
 	public static final int HEIGHT = 558;
+	private Color mouseColor = Color.black;
+	private boolean toolboxClicked = false;
 	
 	
 	public PolarGrid() {
@@ -52,23 +54,7 @@ public class PolarGrid extends JPanel implements MouseListener, MouseMotionListe
 	public void paint(Graphics g) {
 		g.setColor(new Color(240,240,240));
 		g.fillRect(0,0,564,569);
-		//fill circles
-		/*
-		int x = 1, y = 5;
-		int width = 550, height = 550;
-		Random r = new Random();
-		for(int i = 0; i < 11; i++) {
-			g.setColor(new Color(r.nextInt(256),r.nextInt(256),r.nextInt(256)));
-			g.fillArc(x, y, width , height, 0, 368);
-			x += 25;
-			y += 25;
-			width -= 50;
-			height -= 50;
-			
-		}
-		*/
 		
-	
 		for(int i = 0; i < sectors.length; i++) {
 			g.setColor(sectors[i].getColor());
 			g.fillArc(sectors[i].getX(), sectors[i].getY(), sectors[i].getWidth() , sectors[i].getHeight(), (int)sectors[i].getStartAngle(), 23);
@@ -137,34 +123,65 @@ public class PolarGrid extends JPanel implements MouseListener, MouseMotionListe
 		
 		
 	}
+	
+	public void reset() {
+		for(int i = 0; i < 176; i++) {
+			sectors[i].setColor(new Color(240,240,240));
+		}
+		repaint();
+		
+	}
+	
 
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		int mx = e.getX();
-		int my = e.getY();
-		Point mouseOver = new Point(mx, my);
-		System.out.println("(" + mx + " , " + my + ")" );
-		for(int i = 0; i < 176; i++) {
-			if(PolarGrid.sectors[i].getPoly().contains(mouseOver)) {
-				PolarGrid.sectors[i].setColor(Color.black);
-				repaint();
+		if(toolboxClicked == true && Search.isSearching == false) {
+			int mx = e.getX();
+			int my = e.getY();
+			Point mouseOver = new Point(mx, my);
+			System.out.println("(" + mx + " , " + my + ")" );
+			if(mouseColor == Color.green) {
+				for(int i = 0; i < 176; i++) {
+					if(PolarGrid.sectors[i].getColor() == Color.green) {
+						PolarGrid.sectors[i].setColor(new Color(240,240,240));
+						repaint();
+					}
+				}
 			}
-		}	
+			for(int i = 0; i < 176; i++) {
+				if(PolarGrid.sectors[i].getPoly().contains(mouseOver)) {
+					PolarGrid.sectors[i].setColor(mouseColor);
+					repaint();
+				}
+			}
+		}
+	
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		int mx = e.getX();
-		int my = e.getY();
-		Point mouseOver = new Point(mx, my);
-		System.out.println("(" + mx + " , " + my + ")" );
-		for(int i = 0; i < 176; i++) {
-			if(PolarGrid.sectors[i].getPoly().contains(mouseOver)) {
-				PolarGrid.sectors[i].setColor(Color.black);
-				repaint();
+		if(toolboxClicked == true && Search.isSearching == false) {
+			int mx = e.getX();
+			int my = e.getY();
+			Point mouseOver = new Point(mx, my);
+			System.out.println("(" + mx + " , " + my + ")" );
+			if(mouseColor == Color.green) {
+				for(int i = 0; i < 176; i++) {
+					if(PolarGrid.sectors[i].getColor() == Color.green) {
+						PolarGrid.sectors[i].setColor(new Color(240,240,240));
+						repaint();
+					}
+				}
 			}
-		}	
+			for(int i = 0; i < 176; i++) {
+				if(PolarGrid.sectors[i].getPoly().contains(mouseOver)) {
+					PolarGrid.sectors[i].setColor(mouseColor);
+					repaint();
+				}
+			}
+		}
+	
 	}
 	
 	@Override
@@ -182,7 +199,12 @@ public class PolarGrid extends JPanel implements MouseListener, MouseMotionListe
 	@Override
 	public void mouseExited(MouseEvent e) {}
 
-	
+	public void setMouseColor(Color c) {
+		this.mouseColor = c;
+	}
+	public void setToolboxClicked(boolean b) {
+		this.toolboxClicked = b;
+	}
 	
 
 }

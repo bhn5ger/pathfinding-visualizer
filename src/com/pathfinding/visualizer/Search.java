@@ -4,9 +4,17 @@ import java.awt.Color;
 
 public class Search implements Runnable{
 	
-	public Graph graph;
+	private Graph graph;
+	private String algorithm;
+	private int startingIndex;
+	public static boolean isSearching = false;
 	
-	public Search() {
+	public Search(String algorithm) {
+		this.algorithm = algorithm;
+		for(int i = 0; i < 176; i++) {
+			if(PolarGrid.sectors[i].getColor() == Color.green) this.startingIndex = i;
+		}
+		
 		//create graph
 		graph = new Graph(176);
 		for(int i = 0; i < 176; i++) {
@@ -34,6 +42,7 @@ public class Search implements Runnable{
 		}
 		
 		Thread t = new Thread(this);
+		isSearching = true;
 		t.start();
 		
 		
@@ -41,9 +50,10 @@ public class Search implements Runnable{
 	
 	@Override
 	public void run() {
-        System.out.println("Following is Breadth First Traversal "+
-                "(starting from vertex 0)");
-        graph.BFS(170, Window.polargrid);
+		if(this.algorithm.equals("BFS")) {
+			graph.BFS(startingIndex, Window.polargrid);
+		}
+        isSearching = false;
 		
 	}
 
