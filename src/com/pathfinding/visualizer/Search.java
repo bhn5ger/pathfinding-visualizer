@@ -6,17 +6,18 @@ public class Search implements Runnable{
 	
 	private Graph graph;
 	private String algorithm;
-	private int startingIndex;
+	private int startingIndex, endIndex;
 	public static boolean isSearching = false;
 	
 	public Search(String algorithm) {
 		this.algorithm = algorithm;
 		for(int i = 0; i < 176; i++) {
 			if(PolarGrid.sectors[i].getColor() == Color.green) this.startingIndex = i;
+			if(PolarGrid.sectors[i].getColor() == Color.red) this.endIndex = i;
 		}
 		
 		//create graph
-		graph = new Graph(176);
+		graph = new Graph(176); 
 		for(int i = 0; i < 176; i++) {
 			if( i == 15 || i == 31 || i == 47 || i == 63 || i == 79 || i == 95 || i == 111 || i == 127 || i == 143 || i == 159 || i == 175) {
 				if(PolarGrid.sectors[i].getColor() != Color.black && PolarGrid.sectors[i - 15].getColor() != Color.black) {
@@ -51,7 +52,7 @@ public class Search implements Runnable{
 	@Override
 	public void run() {
 		if(this.algorithm.equals("BFS")) {
-			graph.BFS(startingIndex, Window.polargrid);
+			graph.BFS(startingIndex, endIndex, Window.polargrid);
 		}
         isSearching = false;
 		

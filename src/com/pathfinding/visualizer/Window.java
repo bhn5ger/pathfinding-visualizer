@@ -104,6 +104,7 @@ public class Window implements ActionListener{
 		
 		finish = new JRadioButton("Finish");
 		finish.setBounds(11, 44, 109, 23);
+		finish.addActionListener(this);
 		toolbox.add(finish);
 		
 		wall = new JRadioButton("Wall");
@@ -158,7 +159,7 @@ public class Window implements ActionListener{
 		
 	}
 
-	@Override
+	@Override 
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("Search") && Search.isSearching == false){
 			Search s = new Search(String.valueOf(algorithms.getSelectedItem()));
@@ -167,7 +168,7 @@ public class Window implements ActionListener{
 		if(e.getActionCommand().equals("Reset") && Search.isSearching == false){
 			polargrid.reset();
 			
-		}
+		}  
 		if(e.getSource() == wall) {
 			polargrid.setToolboxClicked(true);
 			polargrid.setMouseColor(Color.black);
@@ -179,6 +180,10 @@ public class Window implements ActionListener{
 		if(e.getSource() == start) {
 			polargrid.setToolboxClicked(true);
 			polargrid.setMouseColor(Color.green);
+		}
+		if(e.getSource() == finish) {
+			polargrid.setToolboxClicked(true);
+			polargrid.setMouseColor(Color.red);
 		}
 	}
 }

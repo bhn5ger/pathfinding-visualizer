@@ -22,7 +22,7 @@ public class Sector {
 		int lowerRadius = convertXCartesian( (int) ( ( 550 - ( (12 - (width/50)) * (25) ) )) );
 		int upperRadius = lowerRadius + 25;
 				
-		double startTheta = Math.toRadians(startAngle);
+		double startTheta = Math.toRadians(startAngle); 
 		double midTheta = Math.toRadians((startAngle + endAngle)/2);
 		double endTheta = Math.toRadians(endAngle);
 		

@@ -29,7 +29,7 @@ public class Graph
     }
  
     // prints BFS traversal from a given source s
-    void BFS(int s, PolarGrid polargrid)
+    void BFS(int s, int end, PolarGrid polargrid)
     {
     	int startingIndex = s;
         // Mark all the vertices as not visited(By default
@@ -48,7 +48,7 @@ public class Graph
             // Dequeue a vertex from queue and print it
             s = queue.poll();
             System.out.print(s+" ");
-            if(s != startingIndex)PolarGrid.sectors[s].setColor(new Color(0,255,255));
+            if(s != startingIndex && s != end)PolarGrid.sectors[s].setColor(new Color(0,255,255));
             polargrid.repaint();
             try {
     			Thread.sleep(25);
@@ -63,7 +63,7 @@ public class Graph
             Iterator<Integer> i = adj[s].listIterator();
             while (i.hasNext())
             {
-            	
+            	 
                 int n = i.next();
                 if (!visited[n])
                 {
