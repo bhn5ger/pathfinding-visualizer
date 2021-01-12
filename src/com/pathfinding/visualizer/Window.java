@@ -63,6 +63,7 @@ public class Window implements ActionListener{
 		
 		polargrid = new PolarGrid();
 		polargrid.addMouseListener(polargrid);
+		polargrid.addMouseMotionListener(polargrid);
 		polargrid.setBounds(239, 47, 564, 569);
 		frame.getContentPane().add(polargrid);
 		polargrid.setLayout(null);

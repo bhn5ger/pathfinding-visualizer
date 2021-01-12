@@ -3,8 +3,11 @@ package com.pathfinding.visualizer;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.util.Random;
 
 import javax.swing.JPanel;
 
@@ -16,14 +19,12 @@ import javax.swing.JPanel;
  * */
 
 @SuppressWarnings("serial")
-public class PolarGrid extends JPanel implements MouseListener{
+public class PolarGrid extends JPanel implements MouseListener, MouseMotionListener{
 	
 	public static Sector [] sectors = new Sector[176];
-	public Graph graph = new Graph(176);
-		
-	public static final int [] ORIGIN = {279, 285};
-	public static final int [] circleRadii = {4};
-	public static final int [] lineSlopes = {4};
+	public static final Point ORIGIN = new Point(276, 279);
+	public static final int WIDTH = 552;
+	public static final int HEIGHT = 558;
 	
 	
 	public PolarGrid() {
@@ -45,24 +46,6 @@ public class PolarGrid extends JPanel implements MouseListener{
 			startAngle += 22.5;
 			endAngle += 22.5;
 		}
-		//create graph
-		for(int i = 0; i < 176; i++) {
-			if( i == 15 || i == 31 || i == 47 || i == 63 || i == 79 || i == 95 || i == 111 || i == 127 || i == 143 || i == 159 || i == 175) {
-				graph.addEdge(i , i - 15);
-				graph.addEdge(i - 15, i);
-			}
-			else {
-				graph.addEdge(i, i + 1);
-				graph.addEdge(i + 1, i);
-			} 
-		}
-		
-		for(int i = 0; i < 160; i++) {
-				graph.addEdge(i , i + 16);
-				graph.addEdge(i + 16, i);
-
-		}
-		
 	
 	}
 
@@ -136,29 +119,22 @@ public class PolarGrid extends JPanel implements MouseListener{
 		
 		Font f = new Font("TimesRoman", 0, 17);
 		g.setFont(f);
-		g.drawString("¹⁄₈π", 532, 153);
-		g.drawString("¹⁄₄π", 513, 16);
-		g.drawString("³⁄₈π", 360, 11);
-		g.drawString("⁵⁄₈π", 173, 14);
-		g.drawString("³⁄₄π", 36, 18);
-		g.drawString("⁷⁄₈π", -1, 155);
+		g.drawString("π⁄₈", 532, 153);
+		g.drawString("π⁄₄", 513, 16);
+		g.drawString("3π⁄₈", 360, 11);
+		g.drawString("5π⁄₈", 173, 14);
+		g.drawString("3π⁄₄", 36, 18);
+		g.drawString("7π⁄₈", -1, 155);
 		
-		g.drawString("9⁄₈π", 1, 425);
-		g.drawString("5⁄₄π", 28, 544);
-		g.drawString("11⁄₈π", 170, 564);
-		g.drawString("13⁄₈π", 347, 564);
-		g.drawString("7⁄₄π", 500, 552);
-		g.drawString("15⁄₈π", 520, 425);
+		g.drawString("9π⁄₈", 1, 425);
+		g.drawString("5π⁄₄", 28, 544);
+		g.drawString("11π⁄₈", 170, 564);
+		g.drawString("13π⁄₈", 347, 564);
+		g.drawString("7π⁄₄", 500, 552);
+		g.drawString("15π⁄₈", 520, 425);
 		
-		
-	}
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		int mx = e.getX();
-		int my = e.getY();
-		System.out.println("(" + mx + " , " + my + ")" );
-
+		
 		
 	}
 
@@ -167,34 +143,44 @@ public class PolarGrid extends JPanel implements MouseListener{
 	public void mousePressed(MouseEvent e) {
 		int mx = e.getX();
 		int my = e.getY();
-		//System.out.println("(" + mx + " , " + my + ")" );
-		
+		Point mouseOver = new Point(mx, my);
+		System.out.println("(" + mx + " , " + my + ")" );
+		for(int i = 0; i < 176; i++) {
+			if(PolarGrid.sectors[i].getPoly().contains(mouseOver)) {
+				PolarGrid.sectors[i].setColor(Color.black);
+				repaint();
+			}
+		}	
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent e) {
+	public void mouseDragged(MouseEvent e) {
 		int mx = e.getX();
 		int my = e.getY();
-		//System.out.println("(" + mx + " , " + my + ")" );
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		int mx = e.getX();
-		int my = e.getY();
-		//System.out.println("(" + mx + " , " + my + ")" );
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		int mx = e.getX();
-		int my = e.getY();
-		//System.out.println("(" + mx + " , " + my + ")" );
-		
+		Point mouseOver = new Point(mx, my);
+		System.out.println("(" + mx + " , " + my + ")" );
+		for(int i = 0; i < 176; i++) {
+			if(PolarGrid.sectors[i].getPoly().contains(mouseOver)) {
+				PolarGrid.sectors[i].setColor(Color.black);
+				repaint();
+			}
+		}	
 	}
 	
+	@Override
+	public void mouseClicked(MouseEvent e) {}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {}
+	
+	@Override
+	public void mouseReleased(MouseEvent e) {}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {}
+
+	@Override
+	public void mouseExited(MouseEvent e) {}
 
 	
 	
