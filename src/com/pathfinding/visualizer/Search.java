@@ -10,6 +10,8 @@ public class Search implements Runnable{
 	public static boolean isSearching = false;
 	
 	public Search(String algorithm) {
+		
+		Window.polargrid.resetPath();
 		this.algorithm = algorithm;
 		for(int i = 0; i < 176; i++) {
 			if(PolarGrid.sectors[i].getColor() == Color.green) this.startingIndex = i;
@@ -51,6 +53,7 @@ public class Search implements Runnable{
 	
 	@Override
 	public void run() {
+		
 		if(this.algorithm.equals("BFS")) {
 			graph.BFS(startingIndex, endIndex, Window.polargrid);
 		}

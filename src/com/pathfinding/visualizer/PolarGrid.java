@@ -238,6 +238,14 @@ public class PolarGrid extends JPanel implements MouseListener, MouseMotionListe
 
 	
 	}
+	public void resetPath() {
+		Color white = new Color(240,240,240);
+		Color blue = new Color(0,255,255);
+		for(int i = 0; i < sectors.length; i++) {
+			if(sectors[i].getColor().getRed() == blue.getRed() && sectors[i].getColor().getGreen() == blue.getGreen() && sectors[i].getColor().getBlue() == blue.getBlue() ) 
+				sectors[i].setColor(white);		
+		}
+	}
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {}
