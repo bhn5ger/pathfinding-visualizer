@@ -182,7 +182,7 @@ public class Window implements ActionListener{
 
 	@Override 
 	public void actionPerformed(ActionEvent e) {
-		if(e.getActionCommand().equals("Search") && Search.isSearching == false){
+		if(e.getActionCommand().equals("Search") && Search.isSearching == false && polargrid.hasStartAndFinish()){
 			Search s = new Search(String.valueOf(algorithms.getSelectedItem()));
 			
 		}

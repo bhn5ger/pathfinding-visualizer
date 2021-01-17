@@ -133,6 +133,17 @@ public class PolarGrid extends JPanel implements MouseListener, MouseMotionListe
 		
 	}
 	
+	public boolean hasStartAndFinish() {
+		boolean hasStart = false;
+		boolean hasFinish = false;
+		for(int i = 0; i < 176; i++) {
+			if(sectors[i].getColor() == Color.green) hasStart = true;
+			if(sectors[i].getColor() == Color.red) hasFinish = true;
+		}
+		boolean hasStartAndFinish = hasStart && hasFinish;
+		return hasStartAndFinish;
+	}
+	
 
 
 	@Override
