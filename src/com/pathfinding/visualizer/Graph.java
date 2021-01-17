@@ -10,6 +10,7 @@ import java.util.*;
 // representation
 public class Graph
 {
+	private int checks = 0;
     private int V;   // No. of vertices
     private LinkedList<Integer> adj[]; //Adjacency Lists
  
@@ -48,6 +49,8 @@ public class Graph
             // Dequeue a vertex from queue and print it
             s = queue.poll();
             System.out.print(s+" ");
+            Window.setChecks(checks);
+            checks++;
             if(s != startingIndex && s != end)PolarGrid.sectors[s].setColor(new Color(0,255,255));
             polargrid.repaint();
             try {

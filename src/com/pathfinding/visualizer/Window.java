@@ -24,14 +24,16 @@ public class Window implements ActionListener, ChangeListener{
 
 	public static PolarGrid polargrid;
 	private JFrame frame;
-	private JPanel controlPanel, polarGridBorder, toolbox;
+	private JPanel controlPanel, polarGridBorder, toolbox, console;
 	private JLabel title, algoLabel, speedLbl;
 	private JButton search, reset, generate;
 	private JComboBox algorithms;
 	private JRadioButton start, finish, wall, eraser;
 	private JSlider speedSlider;
-	private JLabel checks;
+	private static JLabel checks;
+	private JLabel message;
 	private JLabel pathlen;
+	private ButtonGroup group;
 	private int speed = 51;
 
 	/**
@@ -122,7 +124,7 @@ public class Window implements ActionListener, ChangeListener{
 		eraser.addActionListener(this);
 		toolbox.add(eraser);
 		
-		ButtonGroup group = new ButtonGroup();
+		group = new ButtonGroup();
 		group.add(start);
 		group.add(finish);
 		group.add(wall);
@@ -167,19 +169,19 @@ public class Window implements ActionListener, ChangeListener{
 		title.setBounds(17, 7, 275, 24);
 		frame.getContentPane().add(title);
 		
-		JPanel console = new JPanel();
+		console = new JPanel();
 		console.setBounds(13, 37, 206, 176);
 		frame.getContentPane().add(console);
 		console.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Console", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
 		console.setLayout(null);
 		
 		String mess = "<html> Generate a map or create your <br/> own map with a start and finish, <br/> and then select an algorithm to begin searching. </html>";
-		JLabel message = new JLabel(mess);
+		message = new JLabel(mess);
 		message.setBounds(11, 23, 186, 64);
 		console.add(message);
 		
 		checks = new JLabel("Checks: 0 ");
-		checks.setBounds(57, 126, 72, 14);
+		checks.setBounds(57, 126, 94, 14);
 		console.add(checks);
 		
 		pathlen = new JLabel("Path Length: 0 ");
@@ -197,11 +199,13 @@ public class Window implements ActionListener, ChangeListener{
 		if(e.getActionCommand().equals("Clear Map") && Search.isSearching == false){
 			polargrid.reset();
 			polargrid.setCompleteGrid(false);
+			checks.setText("Checks: " + 0 + " ");
 			
 		}
 		if(e.getActionCommand().equals("Generate Map") && Search.isSearching == false){
 			polargrid.generateMap();
 			polargrid.setCompleteGrid(false);
+			checks.setText("Checks: " + 0 + " ");
 			
 		}
 		if(e.getSource() == wall) {
@@ -227,6 +231,11 @@ public class Window implements ActionListener, ChangeListener{
 		JSlider source = (JSlider)e.getSource();
 		speed = 101 - source.getValue();
 		
+	}
+	
+	
+	public static void setChecks(int n) {
+		checks.setText("Checks: " + n + " ");
 	}
 	
 	
