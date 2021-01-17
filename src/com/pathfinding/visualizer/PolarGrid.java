@@ -16,6 +16,7 @@ import javax.swing.JPanel;
  * Width: 564
  * Height: 569
  * 
+ * sectors.length and 176 are used interchangeably
  * */
 
 @SuppressWarnings("serial")
@@ -142,6 +143,18 @@ public class PolarGrid extends JPanel implements MouseListener, MouseMotionListe
 		}
 		boolean hasStartAndFinish = hasStart && hasFinish;
 		return hasStartAndFinish;
+	}
+	
+	public void generateMap() {
+		reset();
+		
+		Random r = new Random();
+		for(int i = 0; i < sectors.length; i++) {
+			if(r.nextInt(2) == 0) sectors[i].setColor(Color.black);
+		}
+		sectors[r.nextInt(176)].setColor(Color.green);
+		sectors[r.nextInt(176)].setColor(Color.red);
+		
 	}
 	
 

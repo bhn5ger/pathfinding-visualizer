@@ -134,6 +134,7 @@ public class Window implements ActionListener{
 		generate = new JButton("Generate Map");
 		generate.setBackground(Color.LIGHT_GRAY);
 		generate.setBounds(38, 63, 126, 23);
+		generate.addActionListener(this);
 		controlPanel.add(generate);
 		
 		algoLabel = new JLabel("Algorithm:");
@@ -190,7 +191,12 @@ public class Window implements ActionListener{
 			polargrid.reset();
 			polargrid.setCompleteGrid(false);
 			
-		}  
+		}
+		if(e.getActionCommand().equals("Generate Map") && Search.isSearching == false){
+			polargrid.generateMap();
+			polargrid.setCompleteGrid(false);
+			
+		}
 		if(e.getSource() == wall) {
 			polargrid.setToolboxClicked(true);
 			polargrid.setMouseColor(Color.black);
