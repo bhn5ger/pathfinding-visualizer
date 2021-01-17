@@ -29,7 +29,7 @@ public class Graph
     }
  
     // prints BFS traversal from a given source s
-    void BFS(int s, int end, PolarGrid polargrid)
+    void BFS(int s, int end, int speed, PolarGrid polargrid)
     {
     	int startingIndex = s;
         // Mark all the vertices as not visited(By default
@@ -51,7 +51,7 @@ public class Graph
             if(s != startingIndex && s != end)PolarGrid.sectors[s].setColor(new Color(0,255,255));
             polargrid.repaint();
             try {
-    			Thread.sleep(25);
+    			Thread.sleep(speed);
     		} catch (InterruptedException e) {
     			// TODO Auto-generated catch block
     			e.printStackTrace();

@@ -7,12 +7,14 @@ public class Search implements Runnable{
 	private Graph graph;
 	private String algorithm;
 	private int startingIndex, endIndex;
+	private int speed;
 	public static boolean isSearching = false;
 	
-	public Search(String algorithm) {
+	public Search(String algorithm, int speed) {
 		
 		Window.polargrid.resetPath();
 		this.algorithm = algorithm;
+		this.speed = speed;
 		for(int i = 0; i < 176; i++) {
 			if(PolarGrid.sectors[i].getColor() == Color.green) this.startingIndex = i;
 			if(PolarGrid.sectors[i].getColor() == Color.red) this.endIndex = i;
@@ -55,7 +57,7 @@ public class Search implements Runnable{
 	public void run() {
 		
 		if(this.algorithm.equals("BFS")) {
-			graph.BFS(startingIndex, endIndex, Window.polargrid);
+			graph.BFS(startingIndex, endIndex, speed, Window.polargrid);
 		}
         isSearching = false;
         Window.polargrid.setCompleteGrid(true);

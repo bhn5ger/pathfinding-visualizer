@@ -17,8 +17,10 @@ import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
-public class Window implements ActionListener{
+public class Window implements ActionListener, ChangeListener{
 
 	public static PolarGrid polargrid;
 	private JFrame frame;
@@ -30,6 +32,7 @@ public class Window implements ActionListener{
 	private JSlider speedSlider;
 	private JLabel checks;
 	private JLabel pathlen;
+	private int speed = 51;
 
 	/**
 	 * Launch the application.
@@ -143,6 +146,10 @@ public class Window implements ActionListener{
 		
 		speedSlider = new JSlider();
 		speedSlider.setBounds(32, 320, 139, 26);
+		speedSlider.setMinimum(1);
+		speedSlider.setMaximum(100);
+		speedSlider.setValue(50);
+		speedSlider.addChangeListener(this);
 		controlPanel.add(speedSlider);
 		
 		speedLbl = new JLabel("Animation Speed:");
@@ -184,7 +191,7 @@ public class Window implements ActionListener{
 	@Override 
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("Search") && Search.isSearching == false && polargrid.hasStartAndFinish()){
-			Search s = new Search(String.valueOf(algorithms.getSelectedItem()));
+			Search s = new Search(String.valueOf(algorithms.getSelectedItem()), speed);
 			
 		}
 		if(e.getActionCommand().equals("Clear Map") && Search.isSearching == false){
@@ -214,4 +221,23 @@ public class Window implements ActionListener{
 			polargrid.setMouseColor(Color.red);
 		}
 	}
+
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		JSlider source = (JSlider)e.getSource();
+		speed = 101 - source.getValue();
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
