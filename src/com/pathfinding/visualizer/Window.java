@@ -91,7 +91,7 @@ public class Window implements ActionListener, ChangeListener{
 		search.addActionListener(this);
 		controlPanel.add(search);
 		
-		String [] searchOptions = {"Select...", "BFS"};
+		String [] searchOptions = {"Select...", "BFS", "DFS"};
 		algorithms = new JComboBox(searchOptions);
 		algorithms.setBackground(Color.LIGHT_GRAY);
 		algorithms.setBounds(38, 271, 126, 22);

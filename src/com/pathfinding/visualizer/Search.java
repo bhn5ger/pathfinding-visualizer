@@ -21,7 +21,7 @@ public class Search implements Runnable{
 		}
 		
 		//create graph
-		graph = new Graph(176); 
+		graph = new Graph(176, startingIndex, endIndex, speed, Window.polargrid); 
 		for(int i = 0; i < 176; i++) { 
 			if( i == 15 || i == 31 || i == 47 || i == 63 || i == 79 || i == 95 || i == 111 || i == 127 || i == 143 || i == 159 || i == 175) {
 				if(PolarGrid.sectors[i].getColor() != Color.black && PolarGrid.sectors[i - 15].getColor() != Color.black) {
@@ -57,7 +57,10 @@ public class Search implements Runnable{
 	public void run() {
 		
 		if(this.algorithm.equals("BFS")) {
-			graph.BFS(startingIndex, endIndex, speed, Window.polargrid);
+			graph.BFS(startingIndex);
+		}
+		if(this.algorithm.equals("DFS")) {
+			graph.DFS(startingIndex);
 		}
         isSearching = false;
         Window.polargrid.setCompleteGrid(true);
