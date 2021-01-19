@@ -10,6 +10,7 @@ public class Graph
 {
 	private static final int NO_PARENT = -1; 
 	private int checks = 0;
+	private int pathlen = 0;
 	private int startingIndex, endIndex, speed;
 	private PolarGrid polargrid;
     private int V;   // No. of vertices
@@ -259,6 +260,8 @@ public class Graph
         } 
         printPath(parents[currentVertex], parents); 
         System.out.print(currentVertex + " "); 
+        Window.setPathlen(pathlen);
+        pathlen++;
         if(currentVertex != startingIndex && currentVertex != endIndex)PolarGrid.sectors[currentVertex].setColor(Color.yellow);
         polargrid.repaint();
         try {

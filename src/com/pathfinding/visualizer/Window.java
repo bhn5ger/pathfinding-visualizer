@@ -30,9 +30,8 @@ public class Window implements ActionListener, ChangeListener{
 	private JComboBox algorithms;
 	private JRadioButton start, finish, wall, eraser;
 	private JSlider speedSlider;
-	private static JLabel checks;
+	private static JLabel checks, pathlen;
 	private JLabel message;
-	private JLabel pathlen;
 	private ButtonGroup group;
 	private int speed = 51;
 
@@ -193,6 +192,8 @@ public class Window implements ActionListener, ChangeListener{
 	@Override 
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("Search") && Search.isSearching == false && polargrid.hasStartAndFinish()){
+			checks.setText("Checks: " + 0 + " ");
+			pathlen.setText("Path Length: " + 0 + " ");
 			Search s = new Search(String.valueOf(algorithms.getSelectedItem()), speed);
 			
 		}
@@ -200,12 +201,14 @@ public class Window implements ActionListener, ChangeListener{
 			polargrid.reset();
 			polargrid.setCompleteGrid(false);
 			checks.setText("Checks: " + 0 + " ");
+			pathlen.setText("Path Length: " + 0 + " ");
 			
 		}
 		if(e.getActionCommand().equals("Generate Map") && Search.isSearching == false){
 			polargrid.generateMap();
 			polargrid.setCompleteGrid(false);
 			checks.setText("Checks: " + 0 + " ");
+			pathlen.setText("Path Length: " + 0 + " ");
 			
 		}
 		if(e.getSource() == wall) {
@@ -236,6 +239,9 @@ public class Window implements ActionListener, ChangeListener{
 	
 	public static void setChecks(int n) {
 		checks.setText("Checks: " + n + " ");
+	}
+	public static void setPathlen(int n) {
+		pathlen.setText("Path Length: " + n + " ");
 	}
 	
 	
