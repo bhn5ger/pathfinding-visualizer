@@ -45,7 +45,7 @@ public class Search implements Runnable{
 			}
 
 		}
-		
+
 		Thread t = new Thread(this);
 		isSearching = true;
 		t.start();
@@ -61,6 +61,10 @@ public class Search implements Runnable{
 		}
 		if(this.algorithm.equals("DFS")) {
 			graph.DFS(startingIndex);
+		}
+		if(this.algorithm.equals("Dijkstra's")) {
+		    int[][] adjacencyMatrix = graph.convert(graph.getAdj(), 176);
+		    graph.dijkstra(adjacencyMatrix, startingIndex); 
 		}
         isSearching = false;
         Window.polargrid.setCompleteGrid(true);
