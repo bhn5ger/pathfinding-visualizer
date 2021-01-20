@@ -1,14 +1,17 @@
 package com.pathfinding.visualizer;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
  
 // This class represents a directed graph using adjacency list
 // representation
 public class Graph
 {
 	private static final int NO_PARENT = -1; 
+	private boolean pathFound = false;
 	private int checks = 0;
 	private int pathlen = 0;
 	private int startingIndex, endIndex, speed;
@@ -90,48 +93,78 @@ public class Graph
 
         
     }
-    // A function used by DFS
-    void DFSUtil(int v, boolean visited[])
-    {
-        // Mark the current node as visited and print it
-        visited[v] = true;
-        System.out.print(v + " ");
-        Window.setChecks(checks);
-        checks++;
-        if(v != startingIndex && v != endIndex)PolarGrid.sectors[v].setColor(new Color(0,255,255));
-        polargrid.repaint();
-        try {
-			Thread.sleep(speed);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
- 
-        // Recur for all the vertices adjacent to this
-        // vertex
-        Iterator<Integer> i = adj[v].listIterator();
-        while (i.hasNext()) 
-        {
-            int n = i.next();
-            if (!visited[n])
-                DFSUtil(n, visited);
-        }
-    }
- 
-    // The function to do DFS traversal.
-    // It uses recursive
-    // DFSUtil()
-    void DFS(int v)
-    {
-        // Mark all the vertices as 
-        // not visited(set as
-        // false by default in java)
-        boolean visited[] = new boolean[V];
- 
-        // Call the recursive helper 
-        // function to print DFS
-        // traversal
-        DFSUtil(v, visited);
+    void DFS(int s, int d) 
+    { 
+        boolean[] isVisited = new boolean[V]; 
+        ArrayList<Integer> pathList = new ArrayList<>(); 
+
+        // add source to path[] 
+        pathList.add(s); 
+
+        // Call recursive utility 
+        dfsUtil(s, d, isVisited, pathList); 
+    } 
+
+    // A recursive function to print 
+    // all paths from 'u' to 'd'. 
+    // isVisited[] keeps track of 
+    // vertices in current path. 
+    // localPathList<> stores actual 
+    // vertices in the current path 
+    void dfsUtil(Integer u, Integer d, boolean[] isVisited, List<Integer> localPathList) 
+    { 
+    	if(pathFound == false) {
+            if (u.equals(d)) { 
+                System.out.println(localPathList);
+                for(int i = 0; i < localPathList.size(); i++) {
+                	 Window.setPathlen(pathlen);
+                     pathlen++;
+                     if(localPathList.get(i) != startingIndex && localPathList.get(i) != endIndex)PolarGrid.sectors[localPathList.get(i)].setColor(Color.yellow);
+                     polargrid.repaint();
+                     try {
+             			Thread.sleep(speed);
+             		} catch (InterruptedException e) {
+             			// TODO Auto-generated catch block
+             			e.printStackTrace();
+             		}
+                }
+                pathFound = true;
+                // if match found then no need to traverse more till depth 
+                return; 
+            } 
+
+            // Mark the current node
+            isVisited[u] = true; 
+            //if(u == d) break;
+            Window.setChecks(checks);
+            checks++;
+            if(u != startingIndex && u != endIndex)PolarGrid.sectors[u].setColor(new Color(0,255,255));
+            polargrid.repaint();
+            try {
+       			Thread.sleep(speed);
+       		} catch (InterruptedException e) {
+       			// TODO Auto-generated catch block
+       			e.printStackTrace();
+       		}
+
+
+            // Recur for all the vertices 
+            // adjacent to current vertex 
+            for (Integer i : adj[u]) { 
+                if (!isVisited[i]) { 
+                    // store current node 
+                    // in path[] 
+                    localPathList.add(i); 
+                    dfsUtil(i, d, isVisited, localPathList); 
+
+                    // remove current node 
+                    // in path[] 
+                    localPathList.remove(i); 
+                } 
+            } 
+    		
+    	}else return;
+
     }
     
 

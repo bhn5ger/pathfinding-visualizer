@@ -174,7 +174,7 @@ public class Window implements ActionListener, ChangeListener{
 		console.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Console", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
 		console.setLayout(null);
 		
-		String mess = "<html> Generate a map or create your <br/> own map with a start and finish, <br/> and then select an algorithm to begin searching. </html>";
+		String mess = "<html> Generate a map or create your <br/> own map with a start and finish, <br/> then select an algorithm to begin searching. </html>";
 		message = new JLabel(mess);
 		message.setBounds(11, 23, 186, 64);
 		console.add(message);
@@ -184,7 +184,7 @@ public class Window implements ActionListener, ChangeListener{
 		console.add(checks);
 		
 		pathlen = new JLabel("Path Length: 0 ");
-		pathlen.setBounds(57, 145, 94, 14);
+		pathlen.setBounds(57, 145, 116, 14);
 		console.add(pathlen);
 		
 	}

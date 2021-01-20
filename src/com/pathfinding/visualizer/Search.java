@@ -60,7 +60,7 @@ public class Search implements Runnable{
 			graph.BFS(startingIndex);
 		}
 		if(this.algorithm.equals("DFS")) {
-			graph.DFS(startingIndex);
+			graph.DFS(startingIndex, endIndex);
 		}
 		if(this.algorithm.equals("Dijkstra's")) {
 		    int[][] adjacencyMatrix = graph.convert(graph.getAdj(), 176);
