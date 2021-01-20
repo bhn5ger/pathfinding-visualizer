@@ -59,16 +59,7 @@ public class Graph
             // Dequeue a vertex from queue and print it
             s = queue.poll();
             System.out.print(s+" ");
-            Window.setChecks(checks);
-            checks++;
-            if(s != startingIndex && s != endIndex)PolarGrid.sectors[s].setColor(new Color(0,255,255));
-            polargrid.repaint();
-            try {
-    			Thread.sleep(speed);
-    		} catch (InterruptedException e) {
-    			// TODO Auto-generated catch block
-    			e.printStackTrace();
-    		}
+            paintChecks(s);
  
             // Get all adjacent vertices of the dequeued vertex s
             // If a adjacent has not been visited, then mark it
@@ -136,16 +127,7 @@ public class Graph
             // Mark the current node
             isVisited[u] = true; 
             //if(u == d) break;
-            Window.setChecks(checks);
-            checks++;
-            if(u != startingIndex && u != endIndex)PolarGrid.sectors[u].setColor(new Color(0,255,255));
-            polargrid.repaint();
-            try {
-       			Thread.sleep(speed);
-       		} catch (InterruptedException e) {
-       			// TODO Auto-generated catch block
-       			e.printStackTrace();
-       		}
+            paintChecks(u);
 
 
             // Recur for all the vertices 
@@ -243,16 +225,7 @@ public class Graph
             	break;
             } 
             added[nearestVertex] = true; 
-            Window.setChecks(checks);
-            checks++;
-            if(nearestVertex != startingIndex && nearestVertex != endIndex)PolarGrid.sectors[nearestVertex].setColor(new Color(0,255,255));
-            polargrid.repaint();
-            try {
-    			Thread.sleep(speed);
-    		} catch (InterruptedException e) {
-    			// TODO Auto-generated catch block
-    			e.printStackTrace();
-    		}
+            paintChecks(nearestVertex);
 
             // Update dist value of the 
             // adjacent vertices of the 
@@ -305,6 +278,19 @@ public class Graph
 		}
     } 
     
+    
+   public void paintChecks(int x) {
+       Window.setChecks(checks);
+       checks++;
+       if(x != startingIndex && x != endIndex)PolarGrid.sectors[x].setColor(new Color(0,255,255));
+       polargrid.repaint();
+       try {
+			Thread.sleep(speed);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+   } 
     
   //Function to convert adjacency
   //list to adjacency matrix
