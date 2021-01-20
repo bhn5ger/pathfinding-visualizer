@@ -108,16 +108,7 @@ public class Graph
             if (u.equals(d)) { 
                 System.out.println(localPathList);
                 for(int i = 0; i < localPathList.size(); i++) {
-                	 Window.setPathlen(pathlen);
-                     pathlen++;
-                     if(localPathList.get(i) != startingIndex && localPathList.get(i) != endIndex)PolarGrid.sectors[localPathList.get(i)].setColor(Color.yellow);
-                     polargrid.repaint();
-                     try {
-             			Thread.sleep(speed);
-             		} catch (InterruptedException e) {
-             			// TODO Auto-generated catch block
-             			e.printStackTrace();
-             		}
+                	 paintPath(localPathList.get(i));
                 }
                 pathFound = true;
                 // if match found then no need to traverse more till depth 
@@ -155,8 +146,7 @@ public class Graph
     // algorithm for a graph represented  
     // using adjacency matrix 
     // representation 
-    void dijkstra(int[][] adjacencyMatrix, 
-                                        int startVertex) 
+    void dijkstra(int[][] adjacencyMatrix, int startVertex) 
     { 
         int nVertices = adjacencyMatrix[0].length; 
 
@@ -254,8 +244,7 @@ public class Graph
     // Function to print shortest path 
     // from source to currentVertex 
     // using parents array 
-    void printPath(int currentVertex, 
-                                  int[] parents) 
+    void printPath(int currentVertex, int[] parents) 
     { 
           
         // Base case : Source node has 
@@ -266,16 +255,7 @@ public class Graph
         } 
         printPath(parents[currentVertex], parents); 
         System.out.print(currentVertex + " "); 
-        Window.setPathlen(pathlen);
-        pathlen++;
-        if(currentVertex != startingIndex && currentVertex != endIndex)PolarGrid.sectors[currentVertex].setColor(Color.yellow);
-        polargrid.repaint();
-        try {
-			Thread.sleep(speed);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        paintPath(currentVertex);
     } 
     
     
@@ -290,12 +270,23 @@ public class Graph
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-   } 
+   }
+   public void paintPath(int x) {
+	   Window.setPathlen(pathlen);
+       pathlen++;
+       if(x != startingIndex && x != endIndex)PolarGrid.sectors[x].setColor(Color.yellow);
+       polargrid.repaint();
+       try {
+			Thread.sleep(speed);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+   }
     
   //Function to convert adjacency
   //list to adjacency matrix
-   public int[][] convert(LinkedList<Integer> adj[],
-                       int V)
+   public int[][] convert(LinkedList<Integer> adj[], int V)
   {
      
     // Initialize a matrix
