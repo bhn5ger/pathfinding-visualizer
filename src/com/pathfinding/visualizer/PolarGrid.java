@@ -82,12 +82,13 @@ public class PolarGrid extends JPanel implements MouseListener, MouseMotionListe
 		width += 50;
 		height += 50;
 		for(int i = 0; i < 2; i++) {
-			g.drawOval(x, y, width, height);
+			if(i == 1) {
+				g.drawOval(x, y, width, height);
+			}
 			x -= 50;
 			y -= 50;
 			width += 100;
-			height += 100;
-			
+			height += 100;	
 		}
 		
 		//lines

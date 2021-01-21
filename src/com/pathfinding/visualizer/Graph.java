@@ -39,51 +39,101 @@ public class Graph
         adj[v].add(w);
     }
  
-    // prints BFS traversal from a given source s
-    void BFS(int s)
+    // function to print the shortest distance and path
+    // between source vertex and destination vertex
+    void printBFS(LinkedList <Integer> adj [], int s, int dest, int v)
     {
-    	
-        // Mark all the vertices as not visited(By default
-        // set as false)
-        boolean visited[] = new boolean[V];
- 
-        // Create a queue for BFS
-        LinkedList<Integer> queue = new LinkedList<Integer>();
- 
-        // Mark the current node as visited and enqueue it
-        visited[s]=true;
-        queue.add(s);
- 
-        while (queue.size() != 0)
-        {
-            // Dequeue a vertex from queue and print it
-            s = queue.poll();
-            System.out.print(s+" ");
-            paintChecks(s);
- 
-            // Get all adjacent vertices of the dequeued vertex s
-            // If a adjacent has not been visited, then mark it
-            // visited and enqueue it
-            Iterator<Integer> i = adj[s].listIterator();
-            while (i.hasNext())
-            {
-            	 
-                int n = i.next();
-                if (!visited[n])
-                {
-                    visited[n] = true;
-                    queue.add(n);
-                    
+        // predecessor[i] array stores predecessor of
+        // i and distance array stores distance of i
+        // from s
+        int pred[] = new int[v];
+        int dist[] = new int[v];
 
-                }
-            }
-            
+        if (BFS(adj, s, dest, v, pred, dist) == false) {
+            System.out.println("Given source and destination" + "are not connected");
+            return;
         }
 
+        // LinkedList to store path
+        LinkedList<Integer> path = new LinkedList<Integer>();
+        int crawl = dest;
+        path.add(crawl);
+        while (pred[crawl] != -1) {
+            path.add(pred[crawl]);
+            crawl = pred[crawl];
+        }
 
+        // Print distance
+        System.out.println("Shortest path length is: " + dist[dest]);
 
-        
+        // Print path
+        System.out.println("Path is ::");
+        for (int i = path.size() - 1; i >= 0; i--) {
+            System.out.print(path.get(i) + " ");
+            paintPath(path.get(i));
+        }
     }
+
+    // a modified version of BFS that stores predecessor
+    // of each vertex in array pred
+    // and its distance from source in array dist
+    boolean BFS(LinkedList <Integer> adj [], int src, int dest, int v, int pred[], int dist[])
+    {
+        // a queue to maintain queue of vertices whose
+        // adjacency list is to be scanned as per normal
+        // BFS algorithm using LinkedList of Integer type
+        LinkedList<Integer> queue = new LinkedList<Integer>();
+
+        // boolean array visited[] which stores the
+        // information whether ith vertex is reached
+        // at least once in the Breadth first search
+        boolean visited[] = new boolean[v];
+
+        // initially all vertices are unvisited
+        // so v[i] for all i is false
+        // and as no path is yet constructed
+        // dist[i] for all i set to infinity
+        for (int i = 0; i < v; i++) {
+            visited[i] = false;
+            dist[i] = Integer.MAX_VALUE;
+            pred[i] = -1;
+        }
+
+        // now source is first to be visited and
+        // distance from source to itself should be 0
+        visited[src] = true;
+        dist[src] = 0;
+        queue.add(src);
+
+        // bfs Algorithm
+        while (!queue.isEmpty()) {
+            int u = queue.remove();
+            Iterator<Integer> i = adj[u].listIterator();
+            while (i.hasNext())
+            {
+           	 int n = i.next();
+                if (visited[n] == false) {
+                    visited[n] = true;
+                    paintChecks(n);
+                    dist[n] = dist[u] + 1;
+                    pred[n] = u;
+                    queue.add(n);
+
+                    // stopping condition (when we find
+                    // our destination)
+                    if (n == dest)
+                        return true;
+                }
+            }
+           
+
+            
+        }
+        return false;
+    }
+    
+    
+    
     void DFS(int s, int d) 
     { 
         boolean[] isVisited = new boolean[V]; 

@@ -57,7 +57,7 @@ public class Search implements Runnable{
 	public void run() {
 		
 		if(this.algorithm.equals("BFS")) {
-			graph.BFS(startingIndex);
+			graph.printBFS(graph.getAdj(), startingIndex, endIndex, 176);
 		}
 		if(this.algorithm.equals("DFS")) {
 			graph.DFS(startingIndex, endIndex);
