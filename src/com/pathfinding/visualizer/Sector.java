@@ -32,12 +32,12 @@ public class Sector {
 		double midCosTheta = Math.cos(midTheta);
 		double endSinTheta = Math.sin(endTheta);
 		double endCosTheta = Math.cos(endTheta);
-		System.out.println(startSinTheta + "  " + startCosTheta + "  " + endSinTheta + "  " + endCosTheta);
+		
 		int [] xpoints = {convertXScreen(lowerRadius*startCosTheta), convertXScreen(upperRadius*startCosTheta), convertXScreen(upperRadius*midCosTheta), 
 				convertXScreen(upperRadius*endCosTheta), convertXScreen(lowerRadius*endCosTheta), convertXScreen(lowerRadius*midCosTheta)};
 		int [] ypoints = {convertYScreen(lowerRadius*startSinTheta), convertYScreen(upperRadius*startSinTheta), convertYScreen(upperRadius*midSinTheta), 
 				convertYScreen(upperRadius*endSinTheta), convertYScreen(lowerRadius*endSinTheta), convertYScreen(lowerRadius*midSinTheta)};
-		System.out.println(Arrays.toString(xpoints) + "  " + Arrays.toString(ypoints) );
+		
 		this.bounds = new Polygon(xpoints, ypoints, 6) ;
 	}
 	

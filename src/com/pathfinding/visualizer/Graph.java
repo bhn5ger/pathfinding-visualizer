@@ -18,6 +18,7 @@ public class Graph
 	private PolarGrid polargrid;
     private int V;   // No. of vertices
     private LinkedList<Integer> adj[]; //Adjacency Lists
+    private double [][] adjMatrix = new double[176][176];
  
     // Constructor
     Graph(int v, int startingIndex, int endIndex, int speed, PolarGrid polargrid)
@@ -41,22 +42,22 @@ public class Graph
  
     // function to print the shortest distance and path
     // between source vertex and destination vertex
-    void printBFS(LinkedList <Integer> adj [], int s, int dest, int v)
+    void printBFS()
     {
         // predecessor[i] array stores predecessor of
         // i and distance array stores distance of i
         // from s
-        int pred[] = new int[v];
-        int dist[] = new int[v];
+        int pred[] = new int[V];
+        int dist[] = new int[V];
 
-        if (BFS(adj, s, dest, v, pred, dist) == false) {
+        if (BFS(adj, startingIndex, endIndex, V, pred, dist) == false) {
             System.out.println("Given source and destination" + "are not connected");
             return;
         }
 
         // LinkedList to store path
         LinkedList<Integer> path = new LinkedList<Integer>();
-        int crawl = dest;
+        int crawl = endIndex;
         path.add(crawl);
         while (pred[crawl] != -1) {
             path.add(pred[crawl]);
@@ -64,12 +65,14 @@ public class Graph
         }
 
         // Print distance
-        System.out.println("Shortest path length is: " + dist[dest]);
+        System.out.println("Shortest path length is: " + dist[endIndex]);
 
         // Print path
         System.out.println("Path is ::");
         for (int i = path.size() - 1; i >= 0; i--) {
-            System.out.print(path.get(i) + " ");
+            //System.out.print(path.get(i) + " ");
+            System.out.print(path.get(i) + " "); 
+            if((i-1) != -1)System.out.println(path.get(i-1));
             paintPath(path.get(i));
         }
     }
@@ -134,16 +137,16 @@ public class Graph
     
     
     
-    void DFS(int s, int d) 
+    void DFS() 
     { 
         boolean[] isVisited = new boolean[V]; 
         ArrayList<Integer> pathList = new ArrayList<>(); 
 
         // add source to path[] 
-        pathList.add(s); 
+        pathList.add(startingIndex); 
 
         // Call recursive utility 
-        dfsUtil(s, d, isVisited, pathList); 
+        dfsUtil(startingIndex, endIndex, isVisited, pathList); 
     } 
 
     // A recursive function to print 
@@ -158,7 +161,9 @@ public class Graph
             if (u.equals(d)) { 
                 System.out.println(localPathList);
                 for(int i = 0; i < localPathList.size(); i++) {
-                	 paintPath(localPathList.get(i));
+                    System.out.print(localPathList.get(i) + " "); 
+                    if((i+1) < localPathList.size())System.out.println(localPathList.get(i+1));
+                	paintPath(localPathList.get(i));
                 }
                 pathFound = true;
                 // if match found then no need to traverse more till depth 
@@ -196,13 +201,13 @@ public class Graph
     // algorithm for a graph represented  
     // using adjacency matrix 
     // representation 
-    void dijkstra(int[][] adjacencyMatrix, int startVertex) 
+    void dijkstra() 
     { 
-        int nVertices = adjacencyMatrix[0].length; 
+        int nVertices = adjMatrix[0].length; 
 
         // shortestDistances[i] will hold the 
         // shortest distance from src to i 
-        int[] shortestDistances = new int[nVertices]; 
+        double[] shortestDistances = new double[nVertices]; 
 
         // added[i] will true if vertex i is 
         // included / in shortest path tree 
@@ -221,7 +226,7 @@ public class Graph
           
         // Distance of source vertex from 
         // itself is always 0 
-        shortestDistances[startVertex] = 0; 
+        shortestDistances[startingIndex] = 0; 
 
         // Parent array to store shortest 
         // path tree 
@@ -229,7 +234,7 @@ public class Graph
 
         // The starting vertex does not  
         // have a parent 
-        parents[startVertex] = NO_PARENT; 
+        parents[startingIndex] = NO_PARENT; 
 
         // Find shortest path for all  
         // vertices 
@@ -242,7 +247,7 @@ public class Graph
             // always equal to startNode in  
             // first iteration. 
             int nearestVertex = -1; 
-            int shortestDistance = Integer.MAX_VALUE; 
+            double shortestDistance = Integer.MAX_VALUE; 
             for (int vertexIndex = 0; 
                      vertexIndex < nVertices;  
                      vertexIndex++) 
@@ -274,7 +279,7 @@ public class Graph
                      vertexIndex < nVertices;  
                      vertexIndex++)  
             { 
-            	int edgeDistance = adjacencyMatrix[nearestVertex][vertexIndex]; 
+            	double edgeDistance = adjMatrix[nearestVertex][vertexIndex]; 
                   
                 if (edgeDistance > 0
                     && ((shortestDistance + edgeDistance) <  
@@ -304,7 +309,8 @@ public class Graph
             return; 
         } 
         printPath(parents[currentVertex], parents); 
-        System.out.print(currentVertex + " "); 
+        System.out.print(parents[currentVertex] + " "); 
+        System.out.println(currentVertex);
         paintPath(currentVertex);
     } 
     
@@ -336,16 +342,26 @@ public class Graph
     
   //Function to convert adjacency
   //list to adjacency matrix
-   public int[][] convert(LinkedList<Integer> adj[], int V)
+   public double[][] convert(LinkedList<Integer> adj[], int V)
   {
      
     // Initialize a matrix
-    int [][]matrix = new int[V][V];
+    double [][]matrix = new double[V][V];
+    int weightFactor = 11;
 
     for(int i = 0; i < V; i++) 
     {
         for(int j : adj[i]) {
-        	matrix[i][j] = 1;
+        	
+        	if((j != i + 16) && (j != i - 16)) {
+        		matrix[i][j] = weightFactor * (Math.PI/8);
+        	}else {
+        		matrix[i][j] = 1;
+        	}
+        	
+        }
+        if( i == 15 || i == 31 || i == 47 || i == 63 || i == 79 || i == 95 || i == 111 || i == 127 || i == 143 || i == 159 || i == 175) {
+        	weightFactor--;
         }
             
     }
@@ -355,6 +371,12 @@ public class Graph
    
    public LinkedList <Integer> [] getAdj() {
 	   return this.adj;
+   }
+   public void setAdjMatrix(double [][] adj) {
+	   this.adjMatrix = adj;
+   }
+   public double [][] getAdjMatrix(){
+	   return this.adjMatrix;
    }
     
 

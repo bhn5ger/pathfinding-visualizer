@@ -6,33 +6,33 @@ public class Search implements Runnable{
 	
 	private Graph graph;
 	private String algorithm;
-	private int startingIndex, endIndex;
-	private int speed;
 	public static boolean isSearching = false;
 	
 	public Search(String algorithm, int speed) {
 		
 		Window.polargrid.resetPath();
 		this.algorithm = algorithm;
-		this.speed = speed;
+		
+		int startingIndex = 0; 
+		int endIndex = 0;
 		for(int i = 0; i < 176; i++) {
-			if(PolarGrid.sectors[i].getColor() == Color.green) this.startingIndex = i;
-			if(PolarGrid.sectors[i].getColor() == Color.red) this.endIndex = i;
+			if(PolarGrid.sectors[i].getColor() == Color.green) startingIndex = i;
+			if(PolarGrid.sectors[i].getColor() == Color.red) endIndex = i;
 		}
 		
 		//create graph
-		graph = new Graph(176, startingIndex, endIndex, speed, Window.polargrid); 
+		this.graph = new Graph(176, startingIndex, endIndex, speed, Window.polargrid); 
 		for(int i = 0; i < 176; i++) { 
 			if( i == 15 || i == 31 || i == 47 || i == 63 || i == 79 || i == 95 || i == 111 || i == 127 || i == 143 || i == 159 || i == 175) {
 				if(PolarGrid.sectors[i].getColor() != Color.black && PolarGrid.sectors[i - 15].getColor() != Color.black) {
-					graph.addEdge(i , i - 15);
-					graph.addEdge(i - 15, i);
+					this.graph.addEdge(i , i - 15);
+					this.graph.addEdge(i - 15, i);
 				}
 			}
 			else {
 				if(PolarGrid.sectors[i].getColor() != Color.black && PolarGrid.sectors[i + 1].getColor() != Color.black) {
-					graph.addEdge(i, i + 1);
-					graph.addEdge(i + 1, i);
+					this.graph.addEdge(i, i + 1);
+					this.graph.addEdge(i + 1, i);
 				}
 
 			} 
@@ -40,12 +40,14 @@ public class Search implements Runnable{
 		
 		for(int i = 0; i < 160; i++) {
 			if(PolarGrid.sectors[i].getColor() != Color.black && PolarGrid.sectors[i + 16].getColor() != Color.black) {
-				graph.addEdge(i , i + 16);
-				graph.addEdge(i + 16, i);
+				this.graph.addEdge(i , i + 16);
+				this.graph.addEdge(i + 16, i);
 			}
 
 		}
-
+		
+		this.graph.setAdjMatrix(this.graph.convert(this.graph.getAdj(), 176));
+		
 		Thread t = new Thread(this);
 		isSearching = true;
 		t.start();
@@ -56,15 +58,14 @@ public class Search implements Runnable{
 	@Override
 	public void run() {
 		
-		if(this.algorithm.equals("BFS")) {
-			graph.printBFS(graph.getAdj(), startingIndex, endIndex, 176);
+		if(algorithm.equals("BFS")) {
+			graph.printBFS();
 		}
-		if(this.algorithm.equals("DFS")) {
-			graph.DFS(startingIndex, endIndex);
+		if(algorithm.equals("DFS")) {
+			graph.DFS();
 		}
-		if(this.algorithm.equals("Dijkstra's")) {
-		    int[][] adjacencyMatrix = graph.convert(graph.getAdj(), 176);
-		    graph.dijkstra(adjacencyMatrix, startingIndex); 
+		if(algorithm.equals("Dijkstra's")) {
+		    graph.dijkstra(); 
 		}
         isSearching = false;
         Window.polargrid.setCompleteGrid(true);

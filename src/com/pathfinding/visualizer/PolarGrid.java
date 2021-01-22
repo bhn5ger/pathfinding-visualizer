@@ -46,7 +46,6 @@ public class PolarGrid extends JPanel implements MouseListener, MouseMotionListe
 				endAngle = 22.5;
 			}
 			sectors[i] = new Sector(x, y, width , height, startAngle, endAngle);
-			System.out.println(i + "th entry, " + sectors[i]);
 			startAngle += 22.5;
 			endAngle += 22.5;
 		}
@@ -168,7 +167,6 @@ public class PolarGrid extends JPanel implements MouseListener, MouseMotionListe
 				int mx = e.getX();
 				int my = e.getY();
 				Point mouseOver = new Point(mx, my);
-				System.out.println("(" + mx + " , " + my + ")" );
 				Color white = new Color(240,240,240);
 				if(mouseColor == Color.green || mouseColor == Color.red) {
 					for(int i = 0; i < 176; i++) {
@@ -220,7 +218,6 @@ public class PolarGrid extends JPanel implements MouseListener, MouseMotionListe
 				int mx = e.getX();
 				int my = e.getY();
 				Point mouseOver = new Point(mx, my);
-				System.out.println("(" + mx + " , " + my + ")" );
 				Color white = new Color(240,240,240);
 				if(mouseColor == Color.green || mouseColor == Color.red) {
 					for(int i = 0; i < 176; i++) {

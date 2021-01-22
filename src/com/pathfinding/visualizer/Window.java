@@ -30,7 +30,7 @@ public class Window implements ActionListener, ChangeListener{
 	private JComboBox algorithms;
 	private JRadioButton start, finish, wall, eraser;
 	private JSlider speedSlider;
-	private static JLabel checks, pathlen;
+	private static JLabel checks, pathlen, weightedPathlen;
 	private JLabel message;
 	private ButtonGroup group;
 	private int speed = 51;
@@ -180,35 +180,36 @@ public class Window implements ActionListener, ChangeListener{
 		console.add(message);
 		
 		checks = new JLabel("Checks: 0 ");
-		checks.setBounds(57, 126, 94, 14);
+		checks.setBounds(77, 113, 94, 14);
 		console.add(checks);
 		
-		pathlen = new JLabel("Path Length: 0 ");
-		pathlen.setBounds(57, 145, 116, 14);
+		pathlen = new JLabel("Unweighted Path Length: 0 ");
+		pathlen.setBounds(28, 132, 180, 14);
 		console.add(pathlen);
+		
+		weightedPathlen = new JLabel("Weighted Path Length: 0 ");
+		weightedPathlen.setBounds(36, 151, 186, 14);
+		console.add(weightedPathlen);
 		
 	}
 
 	@Override 
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("Search") && Search.isSearching == false && polargrid.hasStartAndFinish()){
-			checks.setText("Checks: " + 0 + " ");
-			pathlen.setText("Path Length: " + 0 + " ");
+			resetConsole();
 			Search s = new Search(String.valueOf(algorithms.getSelectedItem()), speed);
 			
 		}
 		if(e.getActionCommand().equals("Clear Map") && Search.isSearching == false){
 			polargrid.reset();
 			polargrid.setCompleteGrid(false);
-			checks.setText("Checks: " + 0 + " ");
-			pathlen.setText("Path Length: " + 0 + " ");
+			resetConsole();
 			
 		}
 		if(e.getActionCommand().equals("Generate Map") && Search.isSearching == false){
 			polargrid.generateMap();
 			polargrid.setCompleteGrid(false);
-			checks.setText("Checks: " + 0 + " ");
-			pathlen.setText("Path Length: " + 0 + " ");
+			resetConsole();
 			
 		}
 		if(e.getSource() == wall) {
@@ -235,23 +236,21 @@ public class Window implements ActionListener, ChangeListener{
 		speed = 101 - source.getValue();
 		
 	}
-	
+	public void resetConsole() {
+		setChecks(0);
+		setPathlen(0);
+		setWeightedPathlen(0);
+	}
 	
 	public static void setChecks(int n) {
 		checks.setText("Checks: " + n + " ");
 	}
 	public static void setPathlen(int n) {
-		pathlen.setText("Path Length: " + n + " ");
+		pathlen.setText("Unweighted Path Length: " + n + " ");
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public static void setWeightedPathlen(int n) {
+		weightedPathlen.setText("Weighted Path Length: " + n + " ");
+	}
 	
 	
 	
