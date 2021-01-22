@@ -180,15 +180,15 @@ public class Window implements ActionListener, ChangeListener{
 		console.add(message);
 		
 		checks = new JLabel("Checks: 0 ");
-		checks.setBounds(77, 113, 94, 14);
+		checks.setBounds(74, 113, 94, 14);
 		console.add(checks);
 		
 		pathlen = new JLabel("Unweighted Path Length: 0 ");
 		pathlen.setBounds(28, 132, 180, 14);
 		console.add(pathlen);
 		
-		weightedPathlen = new JLabel("Weighted Path Length: 0 ");
-		weightedPathlen.setBounds(36, 151, 186, 14);
+		weightedPathlen = new JLabel("Weighted Path Length: 0.0 ");
+		weightedPathlen.setBounds(28, 151, 186, 14);
 		console.add(weightedPathlen);
 		
 	}
@@ -248,7 +248,7 @@ public class Window implements ActionListener, ChangeListener{
 	public static void setPathlen(int n) {
 		pathlen.setText("Unweighted Path Length: " + n + " ");
 	}
-	public static void setWeightedPathlen(int n) {
+	public static void setWeightedPathlen(double n) {
 		weightedPathlen.setText("Weighted Path Length: " + n + " ");
 	}
 	

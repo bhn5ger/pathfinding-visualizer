@@ -1,6 +1,8 @@
 package com.pathfinding.visualizer;
 
 import java.awt.Color;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -14,6 +16,7 @@ public class Graph
 	private boolean pathFound = false;
 	private int checks = 0;
 	private int pathlen = 0;
+	private double weightedPathlen = 0;
 	private int startingIndex, endIndex, speed;
 	private PolarGrid polargrid;
     private int V;   // No. of vertices
@@ -73,7 +76,8 @@ public class Graph
             //System.out.print(path.get(i) + " ");
             System.out.print(path.get(i) + " "); 
             if((i-1) != -1)System.out.println(path.get(i-1));
-            paintPath(path.get(i));
+            if((i-1) != -1)paintPath(path.get(i), path.get(i-1));
+            else paintPath(path.get(i), 12134);
         }
     }
 
@@ -163,7 +167,8 @@ public class Graph
                 for(int i = 0; i < localPathList.size(); i++) {
                     System.out.print(localPathList.get(i) + " "); 
                     if((i+1) < localPathList.size())System.out.println(localPathList.get(i+1));
-                	paintPath(localPathList.get(i));
+                	if((i+1) < localPathList.size())paintPath(localPathList.get(i), localPathList.get(i+1));
+                	else paintPath(localPathList.get(i), 12134);
                 }
                 pathFound = true;
                 // if match found then no need to traverse more till depth 
@@ -311,7 +316,7 @@ public class Graph
         printPath(parents[currentVertex], parents); 
         System.out.print(parents[currentVertex] + " "); 
         System.out.println(currentVertex);
-        paintPath(currentVertex);
+        paintPath(parents[currentVertex], currentVertex);
     } 
     
     
@@ -327,10 +332,12 @@ public class Graph
 			e.printStackTrace();
 		}
    }
-   public void paintPath(int x) {
+   public void paintPath(int x, int y) {
 	   Window.setPathlen(pathlen);
        pathlen++;
-       if(x != startingIndex && x != endIndex)PolarGrid.sectors[x].setColor(Color.yellow);
+       if(x != -1 && y != 12134)weightedPathlen += adjMatrix[x][y];
+       Window.setWeightedPathlen(round(weightedPathlen, 2));
+       if(y != startingIndex && y != endIndex && y!= 12134)PolarGrid.sectors[y].setColor(Color.yellow);
        polargrid.repaint();
        try {
 			Thread.sleep(speed);
@@ -367,6 +374,13 @@ public class Graph
     }
     return matrix;
   }
+   public double round(double value, int places) {
+	    if (places < 0) throw new IllegalArgumentException();
+
+	    BigDecimal bd = BigDecimal.valueOf(value);
+	    bd = bd.setScale(places, RoundingMode.HALF_UP);
+	    return bd.doubleValue();
+	}
    
    
    public LinkedList <Integer> [] getAdj() {
