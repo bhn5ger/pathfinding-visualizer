@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -20,7 +22,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-public class Window implements ActionListener, ChangeListener{
+public class Window implements ActionListener, ChangeListener, ItemListener{
 
 	public static PolarGrid polargrid;
 	private JFrame frame;
@@ -34,6 +36,11 @@ public class Window implements ActionListener, ChangeListener{
 	private JLabel message;
 	private ButtonGroup group;
 	private int speed = 51;
+	public static final String [] searchOptions = {"Select...", "BFS (unweighted)", "DFS (unweighted)", "Dijkstra's (weighted)"};
+	public static final String [] messages = {"<html> <p style=\"text-align:center\"> Generate a map or create your own map with a start and finish, then select an algorithm to begin searching. </p> </html>",
+											 "<html> <p style=\"text-align:center\"> Breadth-first Search is unweighted and guarantees the shortest unweighted path. </p> </html>",
+											 "<html> <p style=\"text-align:center\"> Depth-first Search is unweighted and does not guarantee the shortest unweighted or weighted path. </p> </html>",
+											 "<html> <p style=\"text-align:center\"> Dijkstra's Algorithm is weighted and guarantees the shortest weighted path. </p> </html>"};
 
 	/**
 	 * Launch the application.
@@ -90,11 +97,11 @@ public class Window implements ActionListener, ChangeListener{
 		search.addActionListener(this);
 		controlPanel.add(search);
 		
-		String [] searchOptions = {"Select...", "BFS", "DFS", "Dijkstra's"};
 		algorithms = new JComboBox(searchOptions);
 		algorithms.setBackground(Color.LIGHT_GRAY);
 		algorithms.setBounds(38, 271, 126, 22);
 		algorithms.addActionListener(this);
+		algorithms.addItemListener(this);
 		controlPanel.add(algorithms);
 		
 		toolbox = new JPanel();
@@ -174,8 +181,7 @@ public class Window implements ActionListener, ChangeListener{
 		console.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Console", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
 		console.setLayout(null);
 		
-		String mess = "<html> Generate a map or create your <br/> own map with a start and finish, <br/> then select an algorithm to begin searching. </html>";
-		message = new JLabel(mess);
+		message = new JLabel(messages[0]);
 		message.setBounds(11, 23, 186, 64);
 		console.add(message);
 		
@@ -196,6 +202,10 @@ public class Window implements ActionListener, ChangeListener{
 	@Override 
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("Search") && Search.isSearching == false && polargrid.hasStartAndFinish()){
+			if(algorithms.getSelectedItem().equals(searchOptions[0])) {setMessage(messages[0]);}
+			if(algorithms.getSelectedItem().equals(searchOptions[1])) {setMessage(messages[1]);}
+			if(algorithms.getSelectedItem().equals(searchOptions[2])) {setMessage(messages[2]);}
+			if(algorithms.getSelectedItem().equals(searchOptions[3])) {setMessage(messages[3]);}
 			resetConsole();
 			Search s = new Search(String.valueOf(algorithms.getSelectedItem()), speed);
 			
@@ -203,12 +213,14 @@ public class Window implements ActionListener, ChangeListener{
 		if(e.getActionCommand().equals("Clear Map") && Search.isSearching == false){
 			polargrid.reset();
 			polargrid.setCompleteGrid(false);
+			setMessage(messages[0]);
 			resetConsole();
 			
 		}
 		if(e.getActionCommand().equals("Generate Map") && Search.isSearching == false){
 			polargrid.generateMap();
 			polargrid.setCompleteGrid(false);
+			setMessage(messages[0]);
 			resetConsole();
 			
 		}
@@ -236,12 +248,29 @@ public class Window implements ActionListener, ChangeListener{
 		speed = 101 - source.getValue();
 		
 	}
+	
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		if (e.getStateChange() == ItemEvent.SELECTED) {
+			Object item = e.getItem();
+			if(item.equals(searchOptions[0])) {setMessage(messages[0]);}
+			if(item.equals(searchOptions[1])) {setMessage(messages[1]);}
+			if(item.equals(searchOptions[2])) {setMessage(messages[2]);}
+			if(item.equals(searchOptions[3])) {setMessage(messages[3]);}
+	        
+	    }
+		
+	}
+	
 	public void resetConsole() {
 		setChecks(0);
 		setPathlen(0);
 		setWeightedPathlen(0);
 	}
 	
+	public void setMessage(String m) {
+		message.setText(m);
+	}
 	public static void setChecks(int n) {
 		checks.setText("Checks: " + n + " ");
 	}
@@ -251,6 +280,8 @@ public class Window implements ActionListener, ChangeListener{
 	public static void setWeightedPathlen(double n) {
 		weightedPathlen.setText("Weighted Path Length: " + n + " ");
 	}
+
+
 	
 	
 	

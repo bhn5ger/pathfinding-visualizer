@@ -58,13 +58,13 @@ public class Search implements Runnable{
 	@Override
 	public void run() {
 		
-		if(algorithm.equals("BFS")) {
+		if(algorithm.equals(Window.searchOptions[1])) {
 			graph.printBFS();
 		}
-		if(algorithm.equals("DFS")) {
+		if(algorithm.equals(Window.searchOptions[2])) {
 			graph.DFS();
 		}
-		if(algorithm.equals("Dijkstra's")) {
+		if(algorithm.equals(Window.searchOptions[3])) {
 		    graph.dijkstra(); 
 		}
         isSearching = false;
