@@ -73,7 +73,7 @@ public class Window implements ActionListener, ChangeListener, ItemListener{
 	 */
 	private void initialize() {
 		frame = new JFrame("Pathfinding Visualizer");
-		frame.setBounds(100, 100, 840, 674);
+		frame.setBounds(500, 150, 840, 674);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
@@ -252,12 +252,13 @@ public class Window implements ActionListener, ChangeListener, ItemListener{
 	@Override
 	public void itemStateChanged(ItemEvent e) {
 		if (e.getStateChange() == ItemEvent.SELECTED) {
-			Object item = e.getItem();
-			if(item.equals(searchOptions[0])) {setMessage(messages[0]);}
-			if(item.equals(searchOptions[1])) {setMessage(messages[1]);}
-			if(item.equals(searchOptions[2])) {setMessage(messages[2]);}
-			if(item.equals(searchOptions[3])) {setMessage(messages[3]);}
-	        
+			if(Search.isSearching == false) {
+				Object item = e.getItem();
+				if(item.equals(searchOptions[0])) {setMessage(messages[0]);}
+				if(item.equals(searchOptions[1])) {setMessage(messages[1]);}
+				if(item.equals(searchOptions[2])) {setMessage(messages[2]);}
+				if(item.equals(searchOptions[3])) {setMessage(messages[3]);}
+			}
 	    }
 		
 	}
