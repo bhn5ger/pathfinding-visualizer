@@ -1,5 +1,7 @@
 # Polar Pathfinding Visualizer by Brian N.
-Although there are hundreds of cartesian/euclidean/square pathfinding visualizers, I have yet to come across one that is polar/non-euclidian/non-square, perhaps because it is less effective in depicting pathfinding—regardless, this project introduces pathfinding visualization to non-euclidian space and is a tool for visualizing pathfinding algorithms on a polar plane. To use it yourself, [![download it here](distribution/Download.svg)](https://drive.google.com/uc?id=1bZGdVpm-S9uCSdWmFmtXl_zISSy1ARs1&export=download).
+Although there are hundreds of cartesian/euclidean/square pathfinding visualizers, I have yet to come across one that is polar/non-euclidian/non-square, perhaps because it is less effective in depicting pathfinding—regardless, this project introduces pathfinding visualization to non-euclidian space and is a tool for visualizing pathfinding algorithms on a polar plane. To use it yourself, 
+
+[![button](https://user-images.githubusercontent.com/72827220/105613682-168ed580-5d92-11eb-9950-17b6c423c19b.png)](https://drive.google.com/uc?id=1bZGdVpm-S9uCSdWmFmtXl_zISSy1ARs1&export=download)
 
 
 ## Console and Control Panel ##
@@ -38,17 +40,17 @@ The weights of the edges of the graph are explained in detail below.
 ## Weighted and Unweighted Graph Representations ##
 The graph/grid is undirected, but either weighted or unweighted depending on the algorithm selected. Dijkstra's algorithm uses weights while depth-first search and breadth-first search do not. To determine the numerical weights of the weighted graph/grid for dijkstra's algorithm, the measurements below were used.
 
-![measurements3](https://user-images.githubusercontent.com/72827220/105570807-772dfc00-5d19-11eb-92a9-edc06e8a9449.png)
+![measurements](https://user-images.githubusercontent.com/72827220/105614117-2d82f700-5d95-11eb-9022-1176a4cb0c84.png)
 
 With these radii and angles, weights for edges that stem left and right from nodes were calculated with the arc length formula s = rθ, while weights for edges that stem forward and backward from nodes are 1 (because the distance from traveling forward and backward from nodes is constant). The following is a weighted graph that roughly represents the polar grid for dijkstra's.
 
-![weighted2](https://user-images.githubusercontent.com/72827220/105570552-2d90e180-5d18-11eb-8ae7-38ec049a49d0.png)
+![weighted](https://user-images.githubusercontent.com/72827220/105614041-9fa70c00-5d94-11eb-9bcf-3681de7cab69.png)
 
 Note that this graph is not the exact one used in the application, and that the actual graph has 16 nodes per circle(instead of 6), 11 circles(instead of 3), and possibly obstructions. However, the weights between edges in the image properly depict that traveling left and right between nodes farther away from the origin is more costly(because of a greater arc length), whereas traveling forward and backward between nodes is the same distance anywhere on the graph. Consequently, dijkstra's will choose the path that is closer to the center as going left and right is less costly when closer to the origin.
 
 Since depth-first search and breadth-first search do not take weights into account, weights for all edges are 1. The following is an unweighted graph that roughly represents the polar grid for these algorithms.
 
-![unweighted2](https://user-images.githubusercontent.com/72827220/105570543-210c8900-5d18-11eb-8300-59bf69201916.png)
+![unweighted](https://user-images.githubusercontent.com/72827220/105614049-adf52800-5d94-11eb-8f98-995a4ef9e7fd.png)
 
 Note again that this graph is not the exact one used in the application, and that the actual graph has 16 nodes per circle(instead of 6), 11 circles(instead of 3), and possibly obstructions.
 
