@@ -10,19 +10,28 @@ The control panel is below the console and contains 6 components: a button to cl
 ## Weighted and Unweighted Graph Representations ##
 The graph/grid is undirected, but either weighted or unweighted depending on the algorithm selected. Dijkstra's algorithm uses weights while depth-first search and breadth-first search do not. To determine the numerical weights of the weighted graph/grid for dijkstra's algorithm, the measurements below were used.
 
+![measurements](https://user-images.githubusercontent.com/72827220/105564299-99128900-5cef-11eb-8f4a-5d3d241869df.png)
+
 With these radii and angles, weights for edges that stem left and right from nodes were calculated with the arc length formula s = rθ, while weights for edges that stem forward and backward from nodes are 1 (because the distance from traveling forward and backward from nodes is constant). The following is a weighted graph that roughly represents the polar grid for dijkstra's.
 
-Note that this graph is not the exact one used in the application, and that the actual graph has 16 nodes per circle(instead of 6), 11 circles(instead of 3), and possibly obstructions. However, the weights between edges in the image properly depict that traveling left and right between nodes farther away from the origin is more costly(because of a greater arc length), whereas traveling forward and backward between nodes is the same distance anywhere on the graph. Consequently, dijkstra's will choose the path that is closer to the origin as going left and right is less costly when closer to the origin.
+![weighted](https://user-images.githubusercontent.com/72827220/105564322-a6c80e80-5cef-11eb-9a08-8190f7ad4692.png)
+
+Note that this graph is not the exact one used in the application, and that the actual graph has 16 nodes per circle(instead of 6), 11 circles(instead of 3), and possibly obstructions. However, the weights between edges in the image properly depict that traveling left and right between nodes farther away from the origin is more costly(because of a greater arc length), whereas traveling forward and backward between nodes is the same distance anywhere on the graph. Consequently, dijkstra's will choose the path that is closer to the center as going left and right is less costly when closer to the origin.
 
 Since depth-first search and breadth-first search do not take weights into account, weights for all edges are 1. The following is an unweighted graph that roughly represents the polar grid for these algorithms.
+
+![unweighted](https://user-images.githubusercontent.com/72827220/105564326-ae87b300-5cef-11eb-95a9-f4d5733cf0a0.png)
 
 Note again that this graph is not the exact one used in the application, and that the actual graph has 16 nodes per circle(instead of 6), 11 circles(instead of 3), and possibly obstructions.
 
 ## Dijkstra's Algorithm ##
+Dijkstra’s Algorithm prioritizes which paths to explore; instead of exploring all possible paths equally like breadth-first search, it favors lower cost paths. Dijkstra's is weighted and guarantees the shortest weighted path.
 
 ## Depth-first Search ##
+Depth-first Search traverses by exploring as far as possible down each path before backtracking. DFS is unweighted and does not guarantee the shortest unweighted or weighted path.
 
 ## Breadth-first Search ##
+Breadth-first Search explores equally in all directions. BFS is unweighted and guarantees the shortest unweighted path.
 
 ## Comparing Algorithms: Same Map, Different Algorithms ##
 
