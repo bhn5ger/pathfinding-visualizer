@@ -40,17 +40,23 @@ The weights of the edges of the graph are explained in detail below.
 ## Weighted and Unweighted Graph Representations ##
 The graph/grid is undirected, but either weighted or unweighted depending on the algorithm selected. Dijkstra's algorithm uses weights while depth-first search and breadth-first search do not. To determine the numerical weights of the weighted graph/grid for dijkstra's algorithm, the measurements below were used.
 
-![measurements](https://user-images.githubusercontent.com/72827220/105614117-2d82f700-5d95-11eb-9022-1176a4cb0c84.png)
+  <p align="center">
+    <img src="https://user-images.githubusercontent.com/72827220/105614117-2d82f700-5d95-11eb-9022-1176a4cb0c84.png" width="615" height="590" />
+  </p>
 
 With these radii and angles, weights for edges that stem left and right from nodes were calculated with the arc length formula s = rθ, while weights for edges that stem forward and backward from nodes are 1 (because the distance from traveling forward and backward from nodes is constant). The following is a weighted graph that roughly represents the polar grid for dijkstra's.
 
-![weighted](https://user-images.githubusercontent.com/72827220/105614041-9fa70c00-5d94-11eb-9bcf-3681de7cab69.png)
+  <p align="center">
+    <img src="https://user-images.githubusercontent.com/72827220/105614041-9fa70c00-5d94-11eb-9bcf-3681de7cab69.png" width="615" height="572" />
+  </p>
 
 Note that this graph is not the exact one used in the application, and that the actual graph has 16 nodes per circle(instead of 6), 11 circles(instead of 3), and possibly obstructions. However, the weights between edges in the image properly depict that traveling left and right between nodes farther away from the origin is more costly(because of a greater arc length), whereas traveling forward and backward between nodes is the same distance anywhere on the graph. Consequently, dijkstra's will choose the path that is closer to the center as going left and right is less costly when closer to the origin.
 
 Since depth-first search and breadth-first search do not take weights into account, weights for all edges are 1. The following is an unweighted graph that roughly represents the polar grid for these algorithms.
 
-![unweighted](https://user-images.githubusercontent.com/72827220/105614049-adf52800-5d94-11eb-8f98-995a4ef9e7fd.png)
+  <p align="center">
+    <img src="https://user-images.githubusercontent.com/72827220/105614049-adf52800-5d94-11eb-8f98-995a4ef9e7fd.png" width="615" height="572" />
+  </p>
 
 Note again that this graph is not the exact one used in the application, and that the actual graph has 16 nodes per circle(instead of 6), 11 circles(instead of 3), and possibly obstructions.
 
